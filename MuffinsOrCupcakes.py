@@ -98,22 +98,3 @@ muff_or_cupc(50,20)
 sns.lmplot('Flour','Sugar',data=recipes,hue='Type',palette='Set1',fit_reg=False,scatter_kws={"s":70});
 plt.plot(xx,yy,linewidth=2, color = 'black')
 plt.plot(50,20,'yo',markersize='9')
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
