@@ -20,38 +20,27 @@ def create_person(tree,data):
 		tree[data] = new_person
 		print(data,"has been created.")
 
-"""takes dict parameter and two string parameters and sets mother of person."""
-def set_mother(tree,person_name,mother_name):
-	if person_name in tree and mother_name in tree:
-		if tree[person_name][FATHER] == mother_name:
-			print("Mother and father cannot be same person.")
-		elif person_name == mother_name:
-			print("Person cannot be their own mother.")
-		elif tree[mother_name][MOTHER] == person_name or tree[mother_name][FATHER] == person_name:
-			print("Person cannot be the mother of own parent.")
-		elif tree[person_name][MOTHER] == NONE:
-			tree[person_name][MOTHER] = mother_name
-			tree[mother_name][CHILDREN].append(person_name)
-		else:
-			print("Mother already exists") 
-	else:
-		print("Person does not exist.")
-
-def set_father(tree,person_name,father_name):
-	if person_name in tree and father_name in tree:
-		if tree[person_name][MOTHER] == father_name:
-			print("Mother and father cannot be same person.")
-		elif person_name == father_name:
-			print("Person cannot be their own father.")
-		elif tree[father_name][MOTHER] == person_name or tree[father_name][FATHER] == person_name:
-			print("Person cannot be the father of own parent.")
-		elif tree[person_name][FATHER] == NONE:
-			tree[person_name][FATHER] = father_name
-			tree[father_name][CHILDREN].append(person_name)
-		else:
-			print("Father already exists") 
-	else:
-		print("Person does not exist.")
+"""takes dict parameter and three string parameters and sets parent of person. Example for setting mother = set_parent(dict_name,person_name,parent's name, MOTHER)""" 
+def set_parent(tree,person_name,parent_name,which_parent):
+    if person_name in tree and parent_name in tree:
+        if tree[person_name][FATHER] == parent_name or tree[person_name][MOTHER] == parent_name:
+            print("Mother and father cannot be same person.")
+        elif person_name == parent_name and which_parent == MOTHER:
+            print("Person cannot be their own mother.")
+        elif person_name == parent_name and which_parent == FATHER:
+            print("Person cannot be their own father.")
+        elif tree[parent_name][MOTHER] == person_name or tree[parent_name][FATHER] == person_name:
+            print("Person cannot be the mother or father of own parent.")
+        elif tree[person_name][which_parent] == NONE:
+            tree[person_name][which_parent] = parent_name
+            tree[parent_name][CHILDREN].append(person_name)
+        else:
+            if which_parent == MOTHER:
+                print("Mother already exists")
+            elif which_parent == FATHER:
+                print("Father already exists")
+    else:
+        print("Person does not exist.")
 
 """helper function for is_ancestor and is_descendant. takes int parameter n and returns string."""
 def generation_gap(n):
@@ -172,7 +161,6 @@ def load_file(tree,file_name):
 				tree[file_line[0]][CHILDREN] = file_line[3:len(file_line)]
 	file.close()
 
-
 """runs loop and acts as command line. takes dictionary as parameter"""
 def command_line_loop(tree):
 	command_string = "initialize"
@@ -183,9 +171,9 @@ def command_line_loop(tree):
 		if line[0].lower() == "create":
 			create_person(tree,line[1])
 		elif line[0].lower() == "set-mother":
-			set_mother(tree,line[1],line[2])
+			set_parent(tree,line[1],line[2],"MOTHER")
 		elif line[0].lower() == "set-father":
-			set_father(tree,line[1],line[2])
+			set_parent(tree,line[1],line[2],"FATHER")
 		elif line[0].lower() == "display-person":
 			display_person(tree,line[1])
 		elif line[0].lower() == "display-people":
