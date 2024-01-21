@@ -1,7 +1,3 @@
-"""
-File name : asm_interpreter.py
-Date : 04/14/2023 
-"""
 ram = []
 program_memory = []
 bool_list = [0,0] #first index is equal flag. second index is less than flag.
